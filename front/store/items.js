@@ -1,16 +1,26 @@
 /* eslint-disable */
-export const state = () => ({
-  items: [
-  ]
-})
 
-export const mutations = {
-  get(state) {
-    fetch('http://localhost:1337/items')
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
-        state.items = data;
-      });
-  }
+export default {
+  state: {
+    items: []
+  },
+
+  mutations: {
+    updateItems(state, items) {
+      state.items = items
+    }
+  },
+
+  getters: {
+    AllItems(state) {
+      return state.items
+    }
+  },
+  actions: {
+    async fetchItems(ctx) {
+      const res = await fetch("http://localhost:1337/items")
+      const items = await res.json()
+      ctx.commit('updateItems', items)
+    }
+  },
 }

@@ -5,7 +5,7 @@
       <div class="items__list">
         <article
           class="items__list__item"
-          v-for="item in $store.state.items.items"
+          v-for="item in AllItems"
           :key="item.id"
         >
           <h2 class="article__heading">{{ item.name }}</h2>
@@ -17,10 +17,12 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
-  mounted: function () {
-    console.log("start");
-    this.$store.commit("items/get");
+  computed: mapGetters("items", ["AllItems"]),
+  methods: mapActions("items",["fetchItems"]),
+  async mounted() {
+    this.fetchItems()
   },
 };
 </script>
